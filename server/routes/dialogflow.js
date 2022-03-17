@@ -3,6 +3,10 @@ const router = express.Router();
 const structjson = require('./structjson.js');
 const dialogflow = require('dialogflow');
 const uuid = require('uuid');
+const app = express();
+const cors = require('cors');
+
+app.use(cors());
 
 const config = require('../config/keys');
 
