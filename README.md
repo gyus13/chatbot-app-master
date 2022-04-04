@@ -1,6 +1,3 @@
-chatbot-app is being sponsored by the following tool <br />
-Please help to support us by taking a look and signing up to a free trial
-
 
 Hello, My Friends  
 
