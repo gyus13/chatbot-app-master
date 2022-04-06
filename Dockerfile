@@ -1,7 +1,7 @@
 FROM node:alpine
 WORKDIR /usr/src/app
 COPY package.json .
-RUN yarn
+RUN yarn install --ignore-engines
 COPY . .
 RUN yarn build
 EXPOSE 5000
