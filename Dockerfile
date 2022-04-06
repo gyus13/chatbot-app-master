@@ -1,8 +1,8 @@
-FROM node:10
+FROM node:alpine
 WORKDIR /usr/src/app
 COPY package.json .
-RUN npm install
+RUN yarn
 COPY . .
-RUN npm run --script build
+RUN yarn build
 EXPOSE 5000
-CMD [ "npm", "run", "start"  ]
+CMD [ "npm", "start" ]
