@@ -3,20 +3,18 @@ pipeline {
     agent any
 
     triggers {
-                pollSCM('*/3 * * * *')
-            }
+        pollSCM('*/3 * * * *')
+    }
 
     stages {
         // 레포지토리를 다운로드 받음
         stage('Prepare') {
             agent any
             
-            
-            
             steps {
                 echo 'Clonning Repository'
 
-                git url: 'https://github.com/gyus13/chatbot-app-master.git',
+                git url: 'https://github.com/gyus13/blog.git',
                     branch: 'master'
             }
 
@@ -37,41 +35,41 @@ pipeline {
             }
         }
         
-        // stage('Lint Backend') {
-        //     // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
-        //     agent {
-        //       docker {
-        //         image 'node:10'
-        //       }
-        //     }
+        stage('Lint Backend') {
+            // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
+            agent {
+              docker {
+                image 'node:16'
+              }
+            }
 
-        //     steps {
-        //       dir ('./'){
-        //           sh '''
-        //           npm install&&
-        //           npm run lint
-        //           '''
-        //       }
-        //     }
-        // }
+            steps {
+              dir ('./'){
+                  sh '''
+                  npm install&&
+                  npm run lint
+                  '''
+              }
+            }
+        }
 
-        // stage('Test Backend') {
-        //   agent {
-        //     docker {
-        //       image 'node:10'
-        //     }
-        //   }
-        //   steps {
-        //     echo 'Test Backend'
+        stage('Test Backend') {
+          agent {
+            docker {
+              image 'node:16'
+            }
+          }
+          steps {
+            echo 'Test Backend'
 
-        //     dir ('./'){
-        //         sh '''
-        //         npm install
-        //         npm run test
-        //         '''
-        //     }
-        //   }
-        // }
+            dir ('./'){
+                sh '''
+                npm install
+                npm run test
+                '''
+            }
+          }
+        }
         
         stage('Bulid Backend') {
           agent any
@@ -80,7 +78,7 @@ pipeline {
 
             dir ('./'){
                 sh """
-                docker image build -t gyus13/chatbot:latest .
+                docker image build -t gyus13/chatbotapp:latest .
                 """
             }
           }
@@ -92,28 +90,12 @@ pipeline {
           }
         }
         
-        // stage('Deploy Backend') {
-        //   agent any
 
-        //   steps {
-        //     echo 'Build Backend'
-
-        //     dir ('./server'){
-        //         sh '''
-        //         docker rm -f $(docker ps -aq)
-        //         docker run -p 80:80 -d server
-        //         '''
-        //     }
-        //   }
-
-        //   post {
-        //     success {
-        //       mail  to: 'frontalnh@gmail.com',
-        //             subject: "Deploy Success",
-        //             body: "Successfully deployed!"
-                  
-        //     }
-        //   }
-        // }
+        stage('Push Image') {
+        
+        			steps {
+        				sh 'docker push gyus13/chatbotapp:latest'
+        			}
+        		}
     }
 }
