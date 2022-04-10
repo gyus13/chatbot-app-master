@@ -14,8 +14,8 @@ pipeline {
             steps {
                 echo 'Clonning Repository'
 
-                git url: 'https://github.com/gyus13/blog.git',
-                    branch: 'master'
+                git url: 'https://github.com/gyus13/chatbot-app-master.git',
+                    branch: 'main'
             }
 
             post {
@@ -39,7 +39,7 @@ pipeline {
             // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
             agent {
               docker {
-                image 'node:16'
+                image 'node:16-alpine'
               }
             }
 
@@ -56,7 +56,7 @@ pipeline {
         stage('Test Backend') {
           agent {
             docker {
-              image 'node:16'
+              image 'node:16-alpine'
             }
           }
           steps {
