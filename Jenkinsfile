@@ -22,15 +22,15 @@ pipeline {
             }
         }
 
-        stage('Test'){
-            steps {
-              sh 'node -v'
-              sh 'npm prune'
-              sh 'npm install'
-              sh 'npm test'
-            }
+      //   stage('Test'){
+      //       steps {
+      //         sh 'node -v'
+      //         sh 'npm prune'
+      //         sh 'npm install'
+      //         sh 'npm test'
+      //       }
 
-       }
+      //  }
 
         stage('Build Docker Image') {
             steps {
