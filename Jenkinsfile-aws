@@ -42,11 +42,8 @@ pipeline {
 
         stage('Push Image') {
             steps {
-                sh 'rm  ~/.dockercfg || true'
-            sh 'rm ~/.docker/config.json || true'
-
                 script {
-                    docker.withRegistry('389788467086.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:test01') {
+                    docker.withRegistry('https://389788467086.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:test01') {
                         docker_image.push("${env.BUILD_NUMBER}")
                         docker_image.push("latest")
                     }
