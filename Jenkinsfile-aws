@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         ECR_USERNAME = "test01"
+        ECR_URI = "https://389788467086.dkr.ecr.ap-northeast-2.amazonaws.com"
         APP_NAME = "chatbotapp"
         IMAGE_NAME = "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
     }
