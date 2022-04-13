@@ -36,7 +36,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    docker_image = docker.build("${IMAGE_NAME}")
+                    docker_image = docker.build("389788467086.dkr.ecr.ap-northeast-2.amazonaws.com/test01")
                 }
             }
         }
