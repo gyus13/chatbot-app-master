@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    environment {
+        ECR_USERNAME = "test01"
+        APP_NAME = "chatbotapp"
+        IMAGE_NAME = "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
+    }
+
+    stages {
+
+        stage('Clean Workspace'){
+            steps {
+                script {
+                    cleanWs()
+                }
+            }
+        }
+
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
+      //   stage('Test'){
+      //       steps {
+      //         sh 'node -v'
+      //         sh 'npm prune'
+      //         sh 'npm install'
+      //         sh 'npm test'
+      //       }
+
+      //  }
+
+        stage('Build Image') {
+            steps {
+                script {
+                    docker_image = docker.build("${IMAGE_NAME}")
+                }
+            }
+        }
+
+        stage('Push Image') {
+            sh 'rm  ~/.dockercfg || true'
+            sh 'rm ~/.docker/config.json || true'
+
+            steps {
+                script {
+                    docker.withRegistry('389788467086.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:test01') {
+                        docker_image.push("${env.BUILD_NUMBER}")
+                        docker_image.push("latest")
+                    }
+                }
+            }
+        }
+    }
+}
