@@ -22,15 +22,6 @@ pipeline {
             }
         }
 
-      //   stage('Test'){
-      //       steps {
-      //         sh 'node -v'
-      //         sh 'npm prune'
-      //         sh 'npm install'
-      //         sh 'npm test'
-      //       }
-
-      //  }
 
         stage('Build Docker Image') {
             steps {
@@ -51,7 +42,7 @@ pipeline {
         }
         stage('Update GitOps Repo') {
             steps{
-                build job: 'updateManifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
             }
         }
     }
