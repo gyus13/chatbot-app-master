@@ -50,5 +50,10 @@ pipeline {
                 }
             }
         }
+        stage('Update GitOps Repo') {
+            steps{
+                build job: 'updateManifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+            }
+        }
     }
 }
