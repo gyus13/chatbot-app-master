@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const app = express();
 
 const config = require("./server/config/keys");
-const cors = require("cors");
 // const mongoose = require("mongoose");
 // mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 //   .then(() => console.log('MongoDB Connected...'))
@@ -12,11 +11,9 @@ const cors = require("cors");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors({ 
-  origin: '*',
-  credentials: 'true'
- }));
 
+const cors = require("cors");
+app.use(cors({ origin: true, credentials: true }));
 
 app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 
